@@ -1,5 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+//import App from './App';
+import AppRouter from './routers/AppRouter';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Previously rendered the <App /> from App.js
+
+
+
+// Here is where I probably pull in data from mongodb? And pass to <AppRouter />???
+
+// Consider using Axios get requests to the server to do database operations.....
+
+ReactDOM.render(<AppRouter />, document.getElementById('root'));

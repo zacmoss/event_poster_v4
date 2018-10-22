@@ -4,8 +4,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const functions = require('./functions.js');
+//const functions = require('./functions.js');
 const app = express();
+const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
+var mongoose = require('mongoose');
+Promise = require('bluebird');
+mongoose.Promise = Promise;
+require('dotenv').load();
 
 
 app.use(cors());
@@ -21,7 +27,49 @@ app.listen(port, function() {
     console.log("app server listening on" + port);
 });
 
+app.route('/test').get(function (req, res) {
+    res.sendFile(process.cwd() + '/front-end/public/test.html');
+});
+
 // API call
+const CONNECTION_STRING = process.env.DB;
+app.get('/eventFeed', (req, res) => {
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("jive-database");
+        let collection = dbo.collection('events');
+        collection.find().toArray(function(err, result) {
+            let array = result;
+            console.log(array);
+            res.send(array);
+        })
+    });
+})
+app.post('/createEvent', (req, res) => {
+    //res.set('Content-Type', 'text/json');
+
+    let title = req.body.title;
+    let location = req.body.location;
+    let description = req.body.description;
+
+    let eventObject = {
+        "title": title,
+        "location": location,
+        "description": description
+    }
+
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("jive-database");
+        let collection = dbo.collection('events');
+        collection.insertOne(eventObject);
+    });
+
+
+
+
+    res.send({ title: title, location: location, description: description });
+
+})
+/*
 app.post('/axios', (req, res) => {
     res.set('Content-Type', 'text/json');
     const lat = req.body.lat;
@@ -55,6 +103,8 @@ app.post('/axios', (req, res) => {
     console.log("this is the error: " + error);
     res.send({ error: "no response" });
     });
+    
 });
+*/
 
 module.exports = app;
