@@ -1,18 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
+
+// Need to redirect to Event Feed or clear inputs after submit
+
 class CreateEventPage extends React.Component {
-    
-  
-    //this.handleOutsideClick = this.handleOutsideClick.bind(this);
-  
-    /*
-    state = {
-        title: undefined,
-        location: undefined,
-        description: undefined
-    };
-    */
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -33,16 +25,6 @@ class CreateEventPage extends React.Component {
         }).catch(function(err) {
             console.log("error: " + err);
         })
-
-
-    
-        /*
-        this.setState(() => ({ 
-            title: 'test title',
-            location: 'test location',
-            description: 'test description'
-        }));
-        */
     }
     
 

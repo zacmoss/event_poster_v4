@@ -63,48 +63,33 @@ app.post('/createEvent', (req, res) => {
         collection.insertOne(eventObject);
     });
 
-
-
-
     res.send({ title: title, location: location, description: description });
 
 })
-/*
-app.post('/axios', (req, res) => {
-    res.set('Content-Type', 'text/json');
-    const lat = req.body.lat;
-    const lon = req.body.lon;
 
-    const url = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&cnt=16&appid=b3da3c9942f24bac56e8898c51e03757';
-    
-    axios.get(url).then(json => {
-        let arrLength = json.data.list.length;
-        let tempArray = [];
-        
-        let city = json.data.city.name;
-        let country = json.data.city.country;      
-        
-        for (i = 0; i < arrLength; i++) {
-            let x = json.data.list[i].main.temp;
-            x = Math.floor(x);
-            tempArray.push(x);
-        };
-        
-        // functions
-        let mean = functions.meanFunc(tempArray);
-        let median = functions.medianFunc(tempArray);
-        let n = [];
-        n = functions.modeFunc(tempArray);
-        n = n[0];        
-        
-        res.send({ mean: mean, median: median, mode: [n], city: city, country: country });
+app.post('/createUser', (req, res) => {
 
-    }).catch(error => {
-    console.log("this is the error: " + error);
-    res.send({ error: "no response" });
+    let user = req.body.user;
+    let password = req.body.password;
+
+    let userObject = {
+        "user": user,
+        "password": password
+    }
+
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("jive-database");
+        let collection = dbo.collection('users');
+        collection.findOne({user: user}, function(err, result) {
+            if (result) {
+                res.send("User already exists");
+            } else {
+                collection.insertOne(userObject);
+                res.send("User successfully created");
+            }
+        });
     });
-    
-});
-*/
+})
+
 
 module.exports = app;

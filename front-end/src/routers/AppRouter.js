@@ -6,6 +6,10 @@ import HomePage from '../components/HomePage';
 import LoginPage from '../components/LoginPage';
 import NotFoundPage from '../components/NotFoundPage';
 import Footer from '../components/Footer';
+import SignUpPage from '../components/SignUpPage';
+
+// maybe store state in AppRoute
+
 
 
 const AppRouter = () => ( // Client-Side Routing
@@ -16,6 +20,7 @@ const AppRouter = () => ( // Client-Side Routing
             <Switch>
                 <Route path="/" component={HomePage} exact={true} />
                 <Route path="/login" component={LoginPage} />
+                <Route path="/signUp" component={SignUpPage} />
                 <Route path="/createEvent" component={CreateEventPage} />
                 <Route component={NotFoundPage} />
             </Switch>
