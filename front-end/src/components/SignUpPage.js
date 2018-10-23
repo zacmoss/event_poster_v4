@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Header from './Header';
 
 
 // Use a simple toggle for Login / SignUp
@@ -10,6 +11,8 @@ import axios from 'axios';
 // If no user or password or confirmed password, error message
 
 // Need to redirect to HomePage with User id after submit
+
+// Add email field with email validation
 
 class SignUpPage extends React.Component {
 
@@ -23,24 +26,31 @@ class SignUpPage extends React.Component {
             "user": user,
             "password": password
         }
-        console.log(data);
-        
-        if (password == e.target.elements.confirm.value) {
+
+        let self = this;
+
+        if (password === e.target.elements.confirm.value) {
             axios.post('/createUser', data).then(function(response) {
-                console.log("response: " + response.data);
-                alert(response.data);
+                if (response.data.error === 1) {
+                    alert(response.data.message);
+                } else {
+                    alert(response.data.message);
+                    self.props.history.push('/');
+                }
             }).catch(function(err) {
                 console.log("error: " + err);
             })
         } else {
             alert('Passwords do not match');
         }
-        
+
     }
 
     render() {
         return (
             <div>
+                <Header />
+                <hr />
                 <h1>Sign Up Here</h1>
                 <form onSubmit={this.onSubmit}>
                 <input name="user" placeholder="name" required></input>

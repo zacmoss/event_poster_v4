@@ -20,4 +20,11 @@
 
     Need to figure out a solution to keeping mongodb key in .env
     
+
+
+
+    The reason that I'm sticking the Header component in each page is b/c 
+    I need to be able to pass signedIn and have Header re-render. Could use redux,
+    but would rather not over complicate...
+    
 */
