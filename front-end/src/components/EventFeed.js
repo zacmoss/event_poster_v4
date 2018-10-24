@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import '../style.css';
 
 class EventFeed extends React.Component {
     state = {
@@ -23,7 +24,7 @@ class EventFeed extends React.Component {
                 // below must have key for generated ('iterated') data which is returned
                 let mapArray = response.data.map(function(ele) {
                     return (
-                        <div key={ele._id}><p>{ele.title}</p>
+                        <div className="event_container" key={ele._id}><p>{ele.title}</p>
                         <p>{ele.location}</p>
                         <p>{ele.description}</p></div>
                     );
@@ -40,8 +41,8 @@ class EventFeed extends React.Component {
     }
     render() {
         return (
-            <div>
-                <h1>Event Feed</h1>
+            <div className="mid_section">
+                <h2>Event Feed</h2>
                 <div>{this.state.array}</div>
             </div>
         )

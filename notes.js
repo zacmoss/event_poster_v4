@@ -27,4 +27,7 @@
     I need to be able to pass signedIn and have Header re-render. Could use redux,
     but would rather not over complicate...
     
+    For login we're using express-session to show active sign in even after a refresh
+    and storing user login info in mongodb 'jive-database' - 'users'
+    
 */

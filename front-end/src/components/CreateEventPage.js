@@ -1,5 +1,7 @@
 import React from 'react';
+import '../style.css';
 import axios from 'axios';
+import Header from './Header';
 
 
 // Need to redirect to Event Feed or clear inputs after submit
@@ -19,9 +21,11 @@ class CreateEventPage extends React.Component {
             "description": description
         }
 
+        let self = this;
         axios.post('/createEvent', data).then(function(response) {
             console.log("response: " + response.data);
             alert(response.data.title);
+            self.props.history.push('/');
         }).catch(function(err) {
             console.log("error: " + err);
         })
@@ -31,16 +35,33 @@ class CreateEventPage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Create Event</h1>
-                <form onSubmit={this.onSubmit}>
-                    <label>Title</label>
-                    <input name="title" placeholder="Enter a title"></input>
-                    <label>Location</label>
-                    <input name="location" placeholder="Enter a location"></input>
-                    <label>Description</label>
-                    <input name="description" placeholder="Description"></input>
-                    <button>A button</button>
-                </form>
+                <Header />
+                
+                
+                <div className="create_event_page_container">
+                    <div className="create_event_form_container">
+                        <h2>Create Event</h2>
+                        <form className="create_event_form" onSubmit={this.onSubmit}>
+                            <div className="create_event_inputs_container">
+                                <div>
+                                    <div><label>Title</label></div>
+                                    <input name="title" placeholder="Enter a title"></input>
+                                    </div>
+                                    <div>
+                                    <div><label>Location</label></div>
+                                    <input name="location" placeholder="Enter a location"></input>
+                                    </div>
+                                    <div>
+                                    <div><label>Description</label></div>
+                                    <textarea name="description" placeholder="Description"></textarea>
+                                </div>
+                                <div className="button_container">
+                                <button>Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         )
     }

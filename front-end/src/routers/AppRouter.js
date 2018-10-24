@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
+import '../style.css';
 import CreateEventPage from '../components/CreateEventPage';
 //import Header from '../components/Header';
 import HomePage from '../components/HomePage';
@@ -38,7 +39,7 @@ class AppRouter extends React.Component { // Client-Side Routing
         
         return (
             <Router history={history}>
-                <div>
+                <div className="page_container">
                     <Switch>
                         <Route path="/" component={HomePage} exact={true} />
                         <Route path="/login" component={LoginPage} />

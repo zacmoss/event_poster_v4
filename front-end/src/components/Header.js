@@ -1,4 +1,5 @@
 import React from 'react';
+import '../style.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -34,14 +35,17 @@ class Header extends React.Component {
     }
 
     render() {
-        
+        // ---- removed elements ---- 
+        // <Link className="link" to="/">Home</Link>
+
         return (
-            <div>
-                <h1>Header</h1>
-                <Link to="/">Home</Link>
-                {this.state.signedIn === false && <Link to="/login">Login</Link>}
-                {this.state.signedIn === false && <Link to="/signUp">Sign Up</Link>}
-                {this.state.signedIn && <button onClick={this.logout}>Logout</button>}
+            <div className="header_container">
+                <div><h1><Link className="logo" to="/">Jive Events</Link></h1></div>
+                <p><div className="nav_container">
+                    {this.state.signedIn === false && <Link className="link" to="/login">Login</Link>}
+                    {this.state.signedIn === false && <Link className="link" to="/signUp">Sign Up</Link>}
+                    {this.state.signedIn && <button onClick={this.logout}>Logout</button>}
+                </div></p>
             </div>
         )
     }
