@@ -21,7 +21,6 @@ class HomePage extends React.Component {
         return (
             <div>
                 <Header />
-                <hr />
                 <div className="home_page_container">
                     <div className="first_section"></div>
                     <EventFeed />

@@ -59,13 +59,19 @@ app.get('/getSignedInVar', (req, res) => {
 })
 
 app.get('/eventFeed', (req, res) => {
+
+    // if req.session.user
+    let loggedIn = undefined;
+    //if (req.session.user) { loggedIn = true } else { loggedIn = false }
+    req.session.user ? loggedIn = true : loggedIn = false;
+
     MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
         let dbo = db.db("jive-database");
         let collection = dbo.collection('events');
         collection.find().toArray(function(err, result) {
             let array = result;
             console.log(array);
-            res.send(array);
+            res.send({array: array, loggedIn: loggedIn});
         })
     });
 })
@@ -74,6 +80,7 @@ app.post('/logout', (req, res) => {
         signedIn = false;
         req.session.destroy();
         res.send({message: "User has logged out", error: 0, signedIn: false});
+        //window.location.reload(true);
     } else {
         res.send({message: "User not signed in", error: 1, signedIn: false})
     }
@@ -88,7 +95,9 @@ app.post('/createEvent', (req, res) => {
     let eventObject = {
         "title": title,
         "location": location,
-        "description": description
+        "description": description,
+        "interested": [],
+        "going": []
     }
 
     MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {

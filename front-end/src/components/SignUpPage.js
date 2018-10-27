@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import '../style.css';
 import Header from './Header';
+import { Link } from 'react-router-dom';
+
 
 
 // Use a simple toggle for Login / SignUp
@@ -50,14 +53,28 @@ class SignUpPage extends React.Component {
         return (
             <div>
                 <Header />
-                <hr />
-                <h1>Sign Up Here</h1>
-                <form onSubmit={this.onSubmit}>
-                <input name="user" placeholder="name" required></input>
-                <input name="password" placeholder="password" required></input>
-                <input name="confirm" placeholder="confirm password" required></input>
-                <button>Sign Up</button>
-                </form>
+                <div className="form_page_container">
+                    <div className="form_container">
+                        <h2>Sign Up Here</h2>
+                        <form className="form" onSubmit={this.onSubmit}>
+                            <div className="form_inputs_container">
+                                <div>
+                                    <input name="user" placeholder="name" required></input>
+                                </div>
+                                <div>
+                                    <input name="password" placeholder="password" required></input>
+                                </div>
+                                <div>
+                                    <input name="confirm" placeholder="confirm password" required></input>
+                                </div>
+                                <div className="form_button_container">
+                                    <button>Sign Up</button>
+                                </div>
+                                <p>If you already have an account, log in <Link to="/login">here.</Link></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         )
     }

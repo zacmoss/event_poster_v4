@@ -38,25 +38,25 @@ class CreateEventPage extends React.Component {
                 <Header />
                 
                 
-                <div className="create_event_page_container">
-                    <div className="create_event_form_container">
+                <div className="form_page_container">
+                    <div className="form_container">
                         <h2>Create Event</h2>
-                        <form className="create_event_form" onSubmit={this.onSubmit}>
-                            <div className="create_event_inputs_container">
+                        <form className="form" onSubmit={this.onSubmit}>
+                            <div className="form_inputs_container">
                                 <div>
                                     <div><label>Title</label></div>
                                     <input name="title" placeholder="Enter a title"></input>
-                                    </div>
-                                    <div>
+                                </div>
+                                <div>
                                     <div><label>Location</label></div>
                                     <input name="location" placeholder="Enter a location"></input>
-                                    </div>
-                                    <div>
+                                </div>
+                                <div>
                                     <div><label>Description</label></div>
                                     <textarea name="description" placeholder="Description"></textarea>
                                 </div>
-                                <div className="button_container">
-                                <button>Submit</button>
+                                <div className="form_button_container">
+                                    <button>Submit</button>
                                 </div>
                             </div>
                         </form>
