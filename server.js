@@ -39,9 +39,11 @@ app.listen(port, function() {
     console.log("app server listening on" + port);
 });
 
+/*
 app.route('/test').get(function (req, res) {
     res.sendFile(process.cwd() + '/front-end/public/test.html');
 });
+*/
 
 
 
@@ -70,7 +72,7 @@ app.get('/eventFeed', (req, res) => {
         let collection = dbo.collection('events');
         collection.find().toArray(function(err, result) {
             let array = result;
-            console.log(array);
+            //console.log(array);
             res.send({array: array, loggedIn: loggedIn});
         })
     });
@@ -129,6 +131,7 @@ app.post('/createUser', (req, res) => {
             } else {
                 collection.insertOne(userObject);
                 signedIn = true;
+                req.session.userId = result._id;
                 req.session.user = req.body.user;
                 req.session.password = req.body.password;
                 res.send({message: "User successfully created", error: 0, signedIn: true});
@@ -139,6 +142,7 @@ app.post('/createUser', (req, res) => {
 
 app.post('/loginUser', (req, res) => {
     
+    //let userId = req.body._id;
     let user = req.body.user;
     let password = req.body.password;
 
@@ -149,7 +153,9 @@ app.post('/loginUser', (req, res) => {
             if (result) {
                 if (result.password === password) {
                     console.log(result);
+                    
                     signedIn = true;
+                    req.session.userId = result._id;
                     req.session.user = req.body.user;
                     req.session.password = req.body.password;
                     res.send({message: "Successfully signed in", error: 0, signedIn: true});
@@ -164,6 +170,11 @@ app.post('/loginUser', (req, res) => {
     });
     
 })
+
+/*
+app.post('/interestedCheck', (req, res) {
+    // req.session.userId has user id....
+})*/
 
 
 module.exports = app;

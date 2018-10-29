@@ -30,6 +30,42 @@
 
     To Do
 
+    First Final
+
+    Consider that maybe we need to check interested and going on the server at the
+    eventfeed request and then send back confirming or non-confirming variables which 
+    are then used by DotOne and DotTwo
+
+    Add 'interested' and 'going' components
+
+    Consider intersted and going style where words are at top either highlighted
+    or not, no colors involved. And before either is picked, the style would be
+    to highlight them on hover and stay highlighted if clicked. Maybe have yellow
+    and green colors...
+
+    Style logout button
+
+    Maybe add event feed filter
+
+    Clear server.js clutter
+
+    Clear un-needed files
+
+    Deploy to heroku
+
+    Add to portfolio
+
+
+
+
+
+    Save a Style 1 (Base) final and a Style 2 (NYC) final
+
+    Style 1 re-add inset box shadow at top of homepage, form page. Add box shadow to
+    form container and submit button. Add gray background color for forms.
+
+    Add event feed filter on left section of home page to filter events
+
     Could not do 'going' 'interested' as handlers, maybe try to make the dots components
     and pass the needed data into the component as props
 
@@ -56,5 +92,25 @@
     grayed out 'interested' 'going' and if they click they are pushed and highlighted
 
     Need to figure out a solution to keeping mongodb key in .env
+
+
+
+
+    Styles
+
+    Stye 1
+
+    Too boring...
+
+
+
+    Style 2
+
+    Pic 4 - New York Night Background - Grayish Blue Asthetic
+
+    Can't figure out what is best way to do height on form pages, bc on page loads
+    background pic moves bc of differing heights...but all attempts to fix this
+    cause a different issue. For example, on trying to set a fixed height on
+    form_page_container the form is stretching to length of page, not sure why...
     
 */

@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import '../style.css';
+import DotOne from './DotOne';
+import DotTwo from './DotTwo';
 
 class EventFeed extends React.Component {
     /*
@@ -61,8 +63,8 @@ class EventFeed extends React.Component {
                         <div className="event_container" key={ele._id}><p>{ele.title}</p>
                         <p>{ele.location}</p>
                         <p>{ele.description}</p>
-                        {response.data.loggedIn && <p><span className="dot" style={{backgroundColor: dotOne.color}} title={dotOne.title}></span></p>}
-                    {response.data.loggedIn && <p><span className="dot" style={{backgroundColor: dotTwo.color}} title={dotTwo.title}></span></p>}</div>
+                        {response.data.loggedIn && <DotOne message=" test" eventId={ele._id} />/*<p><span className="dot" style={{backgroundColor: dotOne.color}} title={dotOne.title}></span></p>*/}
+                    {response.data.loggedIn && <DotTwo />/*<p><span className="dot" style={{backgroundColor: dotTwo.color}} title={dotTwo.title}></span></p>*/}</div>
                     );
                 });
                    
