@@ -1,42 +1,51 @@
 import React from 'react';
 import '../style.css';
+import axios from 'axios';
 
 class DotOne extends React.Component {
     constructor(props) {
         super(props);
-        
-        /*
         this.state = {
-            eventId: props.eventId
+            backgroundColor: "transparent"
         }
-        */
     }
-
+    componentWillMount() {
+        if (this.props.onOff) {
+            this.setState(() => ({backgroundColor: "yellow"}));
+        }
+    }
     render() {
         return (
             <div>
-                <p onClick={this.handler}><span className="dot"></span>Interested{this.props.eventId}</p>
+                <p><span className="dot" style={{backgroundColor: this.state.backgroundColor}} onClick={this.state.backgroundColor === "yellow" ? () => this.turnOff(this.props.eventId) : () => this.turnOn(this.props.eventId)}></span> Interested</p>
             </div>
         )
     }
 
-    /* on click, get user id
+    /* 
         get this event id from hoc
-        check if user events array contains this event id
+        check if user user array contains this event id (on server)
         if so, make color green or yellow and highlight interested or going
     */
-    handler() {
-        // works
-        alert('test');
-        /*
-        axios.post('/interestedCheck', data).then(function(response) {
-            console.log("response: " + response.data);
-            alert(response.data.title);
-            self.props.history.push('/');
-        }).catch(function(err) {
-            console.log("error: " + err);
+    turnOn(eventId) {
+        let data = {
+            "eventId": eventId
+        }
+        axios.post('/interested', data).then(function(result) {
+            console.log(result);
         })
-        */
+        alert('clicked on' + eventId);
+        this.setState(() => ({backgroundColor: "yellow"}));
+    }
+    turnOff(eventId) {
+        let data = {
+            "eventId": eventId
+        }
+        axios.post('/notInterested', data).then(function(result) {
+            console.log(result);
+        })
+        alert('clicked off' + eventId);
+        this.setState(() => ({backgroundColor: "transparent"}));
     }
 }
 

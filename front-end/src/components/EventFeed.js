@@ -41,30 +41,46 @@ class EventFeed extends React.Component {
             axios.get('/eventFeed').then(response => {
                 // in server check if user signedIn, if so send back user's 
                 // going and interested array
-
+                // interested at response.interested
+                // going at response.going
+                
                 // below must have key for generated ('iterated') data which is returned
                 let mapArray = response.data.array.map(function(ele) {
 
                     let dotOne = {
-                        "color": "white",
-                        "title": "this is a test"
+                        "onOff": false
                     }
                     let dotTwo = {
-                        "color": "white",
-                        "title": "this is a test"
+                        "onOff": false
+                    }
+                    // iterate through response.interested
+                    // if val === ele._id then dotOne.onOff = true
+                    if (response.data.interested && response.data.interested.length > 0) {
+                        let i = 0;
+                        for (i = 0; i < response.data.interested.length; i++) {
+                            if (response.data.interested[i] === ele._id) {
+                                dotOne.onOff = true;
+                            }
+                        }
+                    }
+                    if (response.data.going && response.data.going.length > 0) {
+                        let i = 0;
+                        for (i = 0; i < response.data.going.length; i++) {
+                            if (response.data.going[i] === ele._id) {
+                                dotTwo.onOff = true;
+                            }
+                        }
                     }
 
-                    // if response.data.array.going.length > 0
-                    // if response.data.array.interested.length > 0
-                    // map through ele.interested and ele.going
-                    // if val === ele._id color = yellow or green
-                    //if ()
+                    // map through response.going
+                    // if val === ele._id then dotTwo.onOff = true
+                    
                     return (
                         <div className="event_container" key={ele._id}><p>{ele.title}</p>
                         <p>{ele.location}</p>
                         <p>{ele.description}</p>
-                        {response.data.loggedIn && <DotOne message=" test" eventId={ele._id} />/*<p><span className="dot" style={{backgroundColor: dotOne.color}} title={dotOne.title}></span></p>*/}
-                    {response.data.loggedIn && <DotTwo />/*<p><span className="dot" style={{backgroundColor: dotTwo.color}} title={dotTwo.title}></span></p>*/}</div>
+                        {response.data.loggedIn && <DotOne onOff={dotOne.onOff} eventId={ele._id} />}
+                        {response.data.loggedIn && <DotTwo onOff={dotTwo.onOff} eventId={ele._id} />}</div>
                     );
                 });
                    

@@ -16,6 +16,8 @@ const session = require('express-session');
 
 let signedIn = false;
 
+//let sessionArray =[];
+
 
 app.use(cors());
 
@@ -62,7 +64,6 @@ app.get('/getSignedInVar', (req, res) => {
 
 app.get('/eventFeed', (req, res) => {
 
-    // if req.session.user
     let loggedIn = undefined;
     //if (req.session.user) { loggedIn = true } else { loggedIn = false }
     req.session.user ? loggedIn = true : loggedIn = false;
@@ -73,7 +74,43 @@ app.get('/eventFeed', (req, res) => {
         collection.find().toArray(function(err, result) {
             let array = result;
             //console.log(array);
-            res.send({array: array, loggedIn: loggedIn});
+
+            // if user signedIn we touch db again at 'users' collection to check
+            // for 'interested' or 'going'
+            if (loggedIn) {
+                MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+                    let dbo = db.db("jive-database");
+                    let collection = dbo.collection('users');
+                    collection.findOne({user: req.session.user}, function(err, result) {
+                        console.log('result here');
+                        
+                        
+                        //req.session.interested = [];
+                        //req.session.going = [];
+                        //req.session.interested.push(result.interested);
+                        //req.session.going.push(result.going);
+
+                        req.session.interested = result.interested;
+                        req.session.going = result.going;
+                        // result.interested result.going
+                        // push interested and going into req.session.interested
+
+                        console.log(req.session.interested);
+
+                        res.send({
+                            array: array,
+                            loggedIn: loggedIn,
+                            interested: req.session.interested,
+                            going: req.session.going
+                        })
+                    })
+                })
+
+            } else { // not loggedIn
+            
+            res.send({ array: array, loggedIn: loggedIn });
+
+            }
         })
     });
 })
@@ -117,9 +154,12 @@ app.post('/createUser', (req, res) => {
     let user = req.body.user;
     let password = req.body.password;
 
+    /* old without interested and going */
     let userObject = {
         "user": user,
-        "password": password
+        "password": password,
+        "interested": [],
+        "going": []
     }
 
     MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
@@ -141,11 +181,17 @@ app.post('/createUser', (req, res) => {
 })
 
 app.post('/loginUser', (req, res) => {
+
+    // when user logs in we push a new sessionObject to sessionArray
+    // bc i'm not sure if there can be multiple users on one server at a time??
+
+    // the sessionObjects in sessionArray are to be used here on server to grab
+    // 'interested' and 'going'
     
+    // --------- Check database for user --------
     //let userId = req.body._id;
     let user = req.body.user;
     let password = req.body.password;
-
     MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
         let dbo = db.db("jive-database");
         let collection = dbo.collection('users');
@@ -158,6 +204,18 @@ app.post('/loginUser', (req, res) => {
                     req.session.userId = result._id;
                     req.session.user = req.body.user;
                     req.session.password = req.body.password;
+                    /* don't need bc we're just tagging this onto req.session object
+                    let interested = result.interested;
+                    let going = result.going;
+                    let sessionObject = {
+                        "userId": req.session.userId,
+                        "interested": interested,
+                        "going": going
+                    }
+                    sessionArray.push(sessionObject);
+                    console.log(sessionObject);
+                    console.log(sessionArray);
+                    */
                     res.send({message: "Successfully signed in", error: 0, signedIn: true});
                 } else {
                     res.send({message: "Password incorrect", error: 2, signedIn: false});
@@ -171,10 +229,113 @@ app.post('/loginUser', (req, res) => {
     
 })
 
-/*
-app.post('/interestedCheck', (req, res) {
-    // req.session.userId has user id....
-})*/
+// interested and going post requests
+// works
+app.post('/interested', (req, res) => {
+    eventId = req.body.eventId;
+
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("jive-database");
+        let collection = dbo.collection('users');
+        collection.findOne({user: req.session.user}, function(err, result) {
+            if (!result.interested.includes(eventId)) { // if eventId not in interested
+                collection.findOneAndUpdate( // insert this eventId
+                    {user: req.session.user},
+                    { $push: {interested: eventId}},
+                    function(err, result) {
+                        if (result) {
+                            res.send({message: "EventId successfully saved to userObject"});
+                        } else {
+                            res.send({message: 'Error with insertion'});
+                        }
+                    }
+                )
+            } else {
+                res.send({message: "User already interested in this event"});
+            }
+        })
+        
+    })
+})
+
+app.post('/notInterested', (req, res) => {
+    eventId = req.body.eventId;
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("jive-database");
+        let collection = dbo.collection('users');
+        collection.findOne({user: req.session.user}, function(err, result) {
+            if (result.interested.includes(eventId)) { // if eventId in interested
+                collection.findOneAndUpdate( // remove this eventId from interested
+                    {user: req.session.user},
+                    { $pull: {interested: eventId}},
+                    function(err, result) {
+                        if (result) {
+                            res.send({message: "EventId successfully removed from userObject"});
+                        } else {
+                            res.send({message: 'Error with removal'});
+                        }
+                    }
+                )
+            } else {
+                res.send({message: "User not interested in this event already"});
+            }
+        })
+        
+    })
+})
+
+app.post('/going', (req, res) => {
+    eventId = req.body.eventId;
+
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("jive-database");
+        let collection = dbo.collection('users');
+        collection.findOne({user: req.session.user}, function(err, result) {
+            if (!result.going.includes(eventId)) { // if eventId not in going
+                collection.findOneAndUpdate( // insert this eventId
+                    {user: req.session.user},
+                    { $push: {going: eventId}},
+                    function(err, result) {
+                        if (result) {
+                            res.send({message: "EventId successfully saved to userObject"});
+                        } else {
+                            res.send({message: 'Error with insertion'});
+                        }
+                    }
+                )
+            } else {
+                res.send({message: "User already going to this event"});
+            }
+        })
+        
+    })
+})
+
+app.post('/notGoing', (req, res) => {
+    eventId = req.body.eventId;
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("jive-database");
+        let collection = dbo.collection('users');
+        collection.findOne({user: req.session.user}, function(err, result) {
+            if (result.going.includes(eventId)) { // if eventId in going
+                collection.findOneAndUpdate( // remove this eventId from going
+                    {user: req.session.user},
+                    { $pull: {going: eventId}},
+                    function(err, result) {
+                        if (result) {
+                            res.send({message: "EventId successfully removed from userObject"});
+                        } else {
+                            res.send({message: 'Error with removal'});
+                        }
+                    }
+                )
+            } else {
+                res.send({message: "User not going to this event already"});
+            }
+        })
+        
+    })
+})
 
 
 module.exports = app;

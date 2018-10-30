@@ -25,6 +25,18 @@
     Using window.location.reload(true) on Header component when user logs out to reset
     the event feed to not display 'going' and 'interested
 
+    For Interested and Going feature - On EventFeed we have DotOne and DotTwo as 
+    separate components. As EventFeed loads the /eventFeed call to server gets all events, 
+    but also checks if user is signed in, if so server grabs interested and going arrays
+    which are attached to userObject on req.session. Server then sends those arrays
+    back to the client. EventFeed then checks these arrays for the particular eventId
+    on the current iteration. If the id is there, it turns onOff to true. This onOff
+    variable is sent as a prop to DotOne and DotTwo components. The DotOne and DotTwo
+    components then are colored yellow, green, or transparent depending on that passed
+    prop. Further, on DotOne and DotTwo there are onClick handlers which send requests
+    to server to add that eventId to interested or going arrays on the userObject in
+    the database and can also remove the eventId from interested or going.
+
 
 
 
@@ -32,16 +44,16 @@
 
     First Final
 
-    Consider that maybe we need to check interested and going on the server at the
-    eventfeed request and then send back confirming or non-confirming variables which 
-    are then used by DotOne and DotTwo
-
-    Add 'interested' and 'going' components
+    Make errors show on form rather than alert when logging in, sign up, or create event
 
     Consider intersted and going style where words are at top either highlighted
     or not, no colors involved. And before either is picked, the style would be
     to highlight them on hover and stay highlighted if clicked. Maybe have yellow
     and green colors...
+
+    For filter, could add a tags array to each eventObject, and add all strings
+    in title, description, location...that way we can just search each tags array
+    for each event when running a search using terms...
 
     Style logout button
 
