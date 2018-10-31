@@ -50,9 +50,6 @@
 
     First Final
 
-    Build 'Interested' and 'Going' eventFeed filter, to show only events the user
-    has clicked Interested and Going for. (All, Interes)
-
     Make errors show on form rather than alert when logging in, sign up, or create event
 
     Consider intersted and going style where words are at top either highlighted
