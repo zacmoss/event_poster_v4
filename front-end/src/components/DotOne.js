@@ -2,6 +2,12 @@ import React from 'react';
 import '../style.css';
 import axios from 'axios';
 
+/* 
+    get this event id from hoc
+    check if user user array contains this event id (on server)
+    if so, make color green or yellow and highlight interested or going
+*/
+
 class DotOne extends React.Component {
     constructor(props) {
         super(props);
@@ -22,11 +28,6 @@ class DotOne extends React.Component {
         )
     }
 
-    /* 
-        get this event id from hoc
-        check if user user array contains this event id (on server)
-        if so, make color green or yellow and highlight interested or going
-    */
     turnOn(eventId) {
         let data = {
             "eventId": eventId
@@ -34,7 +35,6 @@ class DotOne extends React.Component {
         axios.post('/interested', data).then(function(result) {
             console.log(result);
         })
-        alert('clicked on' + eventId);
         this.setState(() => ({backgroundColor: "yellow"}));
     }
     turnOff(eventId) {
@@ -44,7 +44,6 @@ class DotOne extends React.Component {
         axios.post('/notInterested', data).then(function(result) {
             console.log(result);
         })
-        alert('clicked off' + eventId);
         this.setState(() => ({backgroundColor: "transparent"}));
     }
 }

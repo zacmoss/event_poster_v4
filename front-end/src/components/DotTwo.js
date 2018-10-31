@@ -22,11 +22,6 @@ class DotTwo extends React.Component {
         )
     }
 
-    /* 
-        get this event id from hoc
-        check if user user array contains this event id (on server)
-        if so, make color green or yellow and highlight interested or going
-    */
     turnOn(eventId) {
         let data = {
             "eventId": eventId
@@ -34,7 +29,6 @@ class DotTwo extends React.Component {
         axios.post('/going', data).then(function(result) {
             console.log(result);
         })
-        alert('clicked on' + eventId);
         this.setState(() => ({backgroundColor: "green"}));
     }
     turnOff(eventId) {
@@ -44,7 +38,6 @@ class DotTwo extends React.Component {
         axios.post('/notGoing', data).then(function(result) {
             console.log(result);
         })
-        alert('clicked off' + eventId);
         this.setState(() => ({backgroundColor: "transparent"}));
     }
 }

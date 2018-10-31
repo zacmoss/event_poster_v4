@@ -37,6 +37,12 @@
     to server to add that eventId to interested or going arrays on the userObject in
     the database and can also remove the eventId from interested or going.
 
+    For All / Interested / Going filter tabs - Had to move eventFeed render logic to
+    a helper function which gets called on componentWillMount and when user clicks on
+    tabs to filter events. The new eventFeed is then render and filters out interested
+    and going accourdingly before changing the state on the array which is rendered
+    conditionally on component's render.
+
 
 
 
@@ -45,7 +51,7 @@
     First Final
 
     Build 'Interested' and 'Going' eventFeed filter, to show only events the user
-    has clicked Interested and Going for.
+    has clicked Interested and Going for. (All, Interes)
 
     Make errors show on form rather than alert when logging in, sign up, or create event
 

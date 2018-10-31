@@ -57,7 +57,9 @@ html, body {
     color: white;
 }
 .link:hover {
-    color: #8B008B;
+    cursor: pointer;
+    /*color: #8B008B;*/
+    color: #9932CC;
 }
 
 
@@ -111,6 +113,80 @@ html, body {
 
 
 /* -------- Event Feed -------- */
+.message_link {
+    text-decoration: none;
+    /*color: #FFC041;*/
+}
+.message {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    text-align: center;
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, .5);
+    /*color: #8B008B;*/
+    /*color: #9932CC;*/
+    /*color: #E13247; bootstrap red */
+    color: #FFC041; /* bootstrap yellow */
+}
+/*
+.message:hover {
+    background-color: rgba(255, 255, 255, .5);
+}
+*/
+
+/* -------- Tabs Style 1 -------- *//*
+.event_feed_tab_container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+}
+.tab {
+    margin: 2rem;
+    font-size: 20px;
+    font-weight: 200;
+}
+.interestedTab {
+    padding: 0 2rem 0 2rem;
+    font-size: 20px;
+    font-weight: 200;
+    border-right: 2px white solid;
+    border-left: 2px white solid;
+}
+*/
+/* -------- Tabs Style 2 -------- */
+.event_feed_tab_container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+
+    background-color: rgba(0, 0, 0, .5);
+    color: rgba(255, 255, 255, .4);
+}
+.tab {
+    padding: .5rem 0;
+    width: 35%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 200;
+    
+}
+.interestedTab {
+    padding: .5rem 0;
+    width: 30%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 200;
+}
+.tab:hover {
+    cursor: pointer;
+}
+.interestedTab:hover {
+    cursor: pointer;
+}
+
 
 .event_container {
     /*border: 1px black solid;*/
@@ -208,6 +284,7 @@ html, body {
     font-size: 16px;
     width: 200px;
     background-color: #8B008B;
+    /*background-color: #9932CC;*/
     color: white;
     /*box-shadow: 1px 1px 4px gray;*/
     border: none;
