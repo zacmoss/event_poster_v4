@@ -12,6 +12,7 @@ var mongoose = require('mongoose');
 Promise = require('bluebird');
 mongoose.Promise = Promise;
 require('dotenv').load();
+require('dotenv').config();
 const session = require('express-session');
 
 let signedIn = false;

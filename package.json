@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "App showcasing api and react skillzzz",
   "main": "server.js",
+  "engines": {
+    "npm": "5.6.0",
+    "node": "9.4.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
