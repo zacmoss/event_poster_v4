@@ -14,6 +14,8 @@ mongoose.Promise = Promise;
 require('dotenv').load();
 require('dotenv').config();
 const session = require('express-session');
+console.log('hello');
+//console.log(dotenv.config());
 
 let signedIn = false;
 
