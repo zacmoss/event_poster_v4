@@ -14,8 +14,9 @@ mongoose.Promise = Promise;
 require('dotenv').load();
 require('dotenv').config();
 const session = require('express-session');
-
-//console.log(dotenv.config());
+console.log('test');
+console.log(require('dotenv').load());
+//console.log(require('dotenv').config());
 
 let signedIn = false;
 
@@ -58,7 +59,7 @@ app.route('/test').get(function (req, res) {
 const CONNECTION_STRING = process.env.DB;
 
 app.get('/testGet', (req, res) => {
-    let data = dotenv.config();
+    let data = require('dotenv').load();
     res.send(data);
 })
 
