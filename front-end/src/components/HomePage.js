@@ -1,7 +1,7 @@
 import React from 'react';
 import '../style.css';
 import EventFeed from './EventFeed';
-//import axios from 'axios';
+import axios from 'axios';
 import Header from './Header';
 
 class HomePage extends React.Component {
