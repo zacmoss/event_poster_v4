@@ -137,7 +137,7 @@ class EventFeed extends React.Component {
                     
                 </div>}
                 {!this.state.signedIn && <Link className="message_link" to="/login"><p className="message">Sign in to access more features.</p></Link>}
-                <div>{this.state.array}</div>
+                <div className="events_array"><div>{this.state.array}</div></div>
                 {this.state.eventCount === 0 && <div className="event_container"><p style={{textAlign: "center"}}>No events to show</p></div>}
             </div>
         )

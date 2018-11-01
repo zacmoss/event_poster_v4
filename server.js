@@ -174,10 +174,13 @@ app.post('/createUser', (req, res) => {
             } else {
                 collection.insertOne(userObject);
                 signedIn = true;
-                req.session.userId = result._id;
-                req.session.user = req.body.user;
-                req.session.password = req.body.password;
-                res.send({message: "User successfully created", error: 0, signedIn: true});
+                collection.findOne({user: user}, function(err, result) {
+                    req.session.userId = result._id;
+                    req.session.user = req.body.user;
+                    req.session.password = req.body.password;
+                    res.send({message: "User successfully created", error: 0, signedIn: true});
+                })
+                
             }
         });
     });

@@ -43,12 +43,21 @@
     and going accourdingly before changing the state on the array which is rendered
     conditionally on component's render.
 
+    HUGE new info here - Finally learned how to set env variables in a production
+    environment. You have to set them in THAT particular environment. In heroku, 
+    in the app's settings there is an option to set a key value pair for the env
+    variable.
+
 
 
 
     To Do
 
     First Final
+
+    Add dates and times
+
+    Do a next / last / first links for event feed and (1, 2, 3)
 
     Make errors show on form rather than alert when logging in, sign up, or create event
 
@@ -65,13 +74,20 @@
 
     Maybe add event feed filter
 
+    Upload to production shell for git and heroku
+    
     Clear server.js clutter
 
     Clear un-needed files
 
-    Deploy to heroku
-
     Add to portfolio
+
+    Finish Style 1
+
+    Finish Style 2 - decided final Style 2
+
+    *Page for Upcoming Events with category banners - Banners with three events on a
+    row with a view all <category> events link
 
 
 

@@ -59,13 +59,13 @@ class SignUpPage extends React.Component {
                         <form className="form" onSubmit={this.onSubmit}>
                             <div className="form_inputs_container">
                                 <div>
-                                    <input name="user" placeholder="name" required></input>
+                                    <input name="user" placeholder="name" autocomplete="off" required></input>
                                 </div>
                                 <div>
-                                    <input name="password" placeholder="password" required></input>
+                                    <input name="password" placeholder="password" autocomplete="off" required></input>
                                 </div>
                                 <div>
-                                    <input name="confirm" placeholder="confirm password" required></input>
+                                    <input name="confirm" placeholder="confirm password" autocomplete="off" required></input>
                                 </div>
                                 <div className="form_button_container">
                                     <button>Sign Up</button>
