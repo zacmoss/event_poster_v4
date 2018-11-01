@@ -8,12 +8,14 @@ class HomePage extends React.Component {
 
     
     componentDidMount() {
+        /*
         console.log('rendered');
         axios.get('/testGet').then(function(result) {
             console.log(result.data);
         }).catch(function(err) {
             console.log("error: " + err);
         })
+        */
     }
     
 

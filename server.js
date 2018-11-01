@@ -12,10 +12,9 @@ var mongoose = require('mongoose');
 Promise = require('bluebird');
 mongoose.Promise = Promise;
 require('dotenv').load();
-require('dotenv').config();
+//require('dotenv').config();
 const session = require('express-session');
-console.log('test');
-console.log(require('dotenv').load());
+
 //console.log(require('dotenv').config());
 
 let signedIn = false;
@@ -57,11 +56,6 @@ app.route('/test').get(function (req, res) {
 // HTTP Requests
 
 const CONNECTION_STRING = process.env.DB;
-
-app.get('/testGet', (req, res) => {
-    let data = require('dotenv').load();
-    res.send(data);
-})
 
 app.get('/getSignedInVar', (req, res) => {
     if (req.session.user) {
