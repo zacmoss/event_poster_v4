@@ -58,7 +58,8 @@ app.route('/test').get(function (req, res) {
 const CONNECTION_STRING = process.env.DB;
 
 app.get('/testGet', (req, res) => {
-    res.send('hello');
+    let data = dotenv.config();
+    res.send(data);
 })
 
 app.get('/getSignedInVar', (req, res) => {
