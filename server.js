@@ -14,7 +14,7 @@ mongoose.Promise = Promise;
 require('dotenv').load();
 require('dotenv').config();
 const session = require('express-session');
-console.log('hello');
+
 //console.log(dotenv.config());
 
 let signedIn = false;
@@ -56,6 +56,10 @@ app.route('/test').get(function (req, res) {
 // HTTP Requests
 
 const CONNECTION_STRING = process.env.DB;
+
+app.get('/testGet', (req, res) => {
+    res.send('hello');
+})
 
 app.get('/getSignedInVar', (req, res) => {
     if (req.session.user) {
