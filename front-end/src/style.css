@@ -177,6 +177,10 @@ html, body {
 /* -------- Event Feed -------- */
 .message_link {
     text-decoration: none;
+    color: #E13247;
+}
+.message_link:hover {
+    text-decoration: underline;
 }
 .message {
     margin-bottom: 1rem;
@@ -186,6 +190,17 @@ html, body {
     /*color: #9932CC;*/
     color: #E13247; /* bootstrap red */
     /*color: #FFC041; /* bootstrap yellow */
+}
+.message_bottom {
+    margin-top: 2rem;
+}
+.next_button {
+    color: blue;
+    margin-left: 1rem;
+}
+.next_button:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 
@@ -220,7 +235,7 @@ html, body {
 }
 
 .events_array {
-    height: 80%;
+    /*height: 80%;*/
 }
 .event_container {
     margin-bottom: 1rem;

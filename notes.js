@@ -55,6 +55,18 @@
     On server.js located just above the HTTP requests, there is an action which deletes
     events which are dated before today's date. This deletes old events automatically.
 
+    Page count and next buttons are super confusing. Basically, once we have the mapArray
+    which is what becomes our eventFeed (It's already been filtered for interested and
+    going), now we break it into two arrays. The first ten get stored in shownArray or
+    firstArray as well as storedArray, the rest get pushed only to storedArray. 
+    If interested or going filters are in effect we have if statements which don't push a 
+    particular mapArray item if it is null which is what is returned if interested or going 
+    filters are applied and the array item is not interested or going. Now, in regard to next 
+    button, we have a handler which grabs pageCount and saves the next 10 events from 
+    storedArray to array (which is our state variable for events shown). We then add 1
+    to pageCount state. For previous, we do the same, but backwards and subtract 1 from 
+    pageCount state.
+
 
 
 
