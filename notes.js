@@ -48,14 +48,19 @@
     in the app's settings there is an option to set a key value pair for the env
     variable.
 
+    dateConverter.js no longer being used b/c when we sortEvents by date it alters the
+    original array for some reason, so we had to do the convert to a formatted date in 
+    sortEvents...
+
+    On server.js located just above the HTTP requests, there is an action which deletes
+    events which are dated before today's date. This deletes old events automatically.
+
 
 
 
     To Do
 
     First Final
-
-    Add dates and times
 
     Do a next / last / first links for event feed and (1, 2, 3)
 

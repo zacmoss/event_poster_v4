@@ -1,8 +1,11 @@
 import React from 'react';
 import '../style.css';
 import EventFeed from './EventFeed';
-import axios from 'axios';
+//import axios from 'axios';
 import Header from './Header';
+import CreateEventComponent from './CreateEventComponent';
+//import { Link } from 'react-router-dom';
+
 
 class HomePage extends React.Component {
 
@@ -25,9 +28,9 @@ class HomePage extends React.Component {
             <div>
                 <Header />
                 <div className="home_page_container">
-                    <div className="first_section"></div>
+                    
                     <EventFeed />
-                    <div className="last_section"></div>
+                    <CreateEventComponent />
                 </div>
             </div>
         )

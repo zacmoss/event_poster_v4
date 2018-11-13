@@ -40,7 +40,7 @@ class Header extends React.Component {
 
         return (
             <div className="header_container">
-                <div><h1><Link className="logo" to="/">Jive Events</Link></h1></div>
+                <div><h1><Link className="logo" to="/">Event Poster</Link></h1></div>
                 <p className="nav_container">
                     {this.state.signedIn === false && <Link className="link" to="/login">Login</Link>}
                     {this.state.signedIn === false && <Link className="link" to="/signUp">Sign Up</Link>}

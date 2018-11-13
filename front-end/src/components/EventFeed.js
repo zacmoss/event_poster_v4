@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import '../style.css';
 import DotOne from './DotOne';
 import DotTwo from './DotTwo';
+//import convertDate from '../dateConverter';
+import sortEvents from '../functions/sortEvents';
 
 class EventFeed extends React.Component {
     
@@ -22,7 +24,7 @@ class EventFeed extends React.Component {
     }
 
     componentWillMount() {
-        
+        //testFunc("2012-01-11");
         let self = this;
         // get signIn variable stored on server
         axios.get('/getSignedInVar').then(function(result) {
@@ -53,7 +55,7 @@ class EventFeed extends React.Component {
             } else {
                 self.setState(() => ({ signedIn: false }));
             }
-
+            
             axios.get('/eventFeed').then(response => {
                 // in server check if user signedIn, if so send back user's 
                 // going and interested array
@@ -62,10 +64,12 @@ class EventFeed extends React.Component {
                 
                 // below must have key for generated ('iterated') data which is returned
                 let eventCount = 0;
-                let mapArray = response.data.array.map(function(ele) {
+                let newArray = sortEvents(response.data.array);
+                //let mapArray = response.data.array.map(function(ele) {
+                let mapArray = newArray.map(function(ele) {
 
                     let displayEvent = true;
-                    
+                    //let date = convertDate(ele.date);
 
                     let dotOne = {
                         "onOff": false
@@ -96,7 +100,7 @@ class EventFeed extends React.Component {
                     if (self.state.feed === "interested") {
                         if (dotOne.onOff === false) {
                             displayEvent = false;
-                            console.log('display switch to false');
+                            //console.log('display switch to false');
                         }
                     }
                     if (self.state.feed === "going") {
@@ -108,19 +112,30 @@ class EventFeed extends React.Component {
                     if (displayEvent === true) {
                         eventCount += 1;
                         return (
-                            <div className="event_container" key={ele._id}><p>{ele.title}</p>
-                            <p>{ele.location}</p>
+                            <div className="event_container" key={ele._id}>
+                            <div className="row">
+                                <div className="event_top_left_space">
+                                <p className="event_title">{ele.title}</p>
+                                </div>
+                                <div className="event_top_right_space">
+                                    {response.data.loggedIn && <DotOne onOff={dotOne.onOff} eventId={ele._id} />}
+                                    {response.data.loggedIn && <DotTwo onOff={dotTwo.onOff} eventId={ele._id} />}
+                                </div>
+                            </div>
+                            
                             <p>{ele.description}</p>
-                            {response.data.loggedIn && <DotOne onOff={dotOne.onOff} eventId={ele._id} />}
-                            {response.data.loggedIn && <DotTwo onOff={dotTwo.onOff} eventId={ele._id} />}</div>
+                            <p>{ele.location}<span>|</span>{ele.time}<span>|</span>{ele.date}</p>
+                            </div>
                         );
+                    } else {
+                        return null;
                     }
                 });
-                   
+                
                 self.setState(() => ({ array: mapArray, eventCount: eventCount }));
         
-            });
-        }).catch(function(err) {
+            }); // for request 'eventFeed'
+        }).catch(function(err) { // for request 'getSignedInVar'
             console.log("error: " + err);
         })
     }
@@ -128,17 +143,18 @@ class EventFeed extends React.Component {
     render() {
         return (
             <div className="mid_section">
-                <h2>Event Feed</h2>
+                <h2>Upcoming Events</h2>
                 {this.state.signedIn && <div className="event_feed_tab_container">
                     
-                        <span className="tab" style={{color: this.state.feed === "all" ? "white" : "rgba(255, 255, 255, .4)"}} onClick={this.allFilterHandler}>All</span>
-                        <span className="interestedTab" style={{color: this.state.feed === "interested" ? "white" : "rgba(255, 255, 255, .4)"}} onClick={this.interestedFilterHandler} title="Only show events you're interested in">Interested</span>
-                        <span className="tab" style={{color: this.state.feed === "going" ? "white" : "rgba(255, 255, 255, .4)"}} onClick={this.goingFilterHandler} title="Only show events you're going to">Going</span>
+                        <span className="tab" style={{color: this.state.feed === "all" ? "black" : "rgba(100, 100, 100, .4)"}} onClick={this.allFilterHandler}>All</span>
+                        <span className="interestedTab" style={{color: this.state.feed === "interested" ? "black" : "rgba(100, 100, 100, .4)"}} onClick={this.interestedFilterHandler} title="Only show events you're interested in">Interested</span>
+                        <span className="tab" style={{color: this.state.feed === "going" ? "black" : "rgba(100, 100, 100, .4)"}} onClick={this.goingFilterHandler} title="Only show events you're going to">Going</span>
                     
                 </div>}
                 {!this.state.signedIn && <Link className="message_link" to="/login"><p className="message">Sign in to access more features.</p></Link>}
-                <div className="events_array"><div>{this.state.array}</div></div>
                 {this.state.eventCount === 0 && <div className="event_container"><p style={{textAlign: "center"}}>No events to show</p></div>}
+                <div className="events_array"><div>{this.state.array}</div></div>
+                
             </div>
         )
     }

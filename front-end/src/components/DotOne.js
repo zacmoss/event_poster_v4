@@ -12,18 +12,19 @@ class DotOne extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            backgroundColor: "transparent"
+            backgroundColor: "transparent",
+            color: "lightgray"
         }
     }
     componentWillMount() {
         if (this.props.onOff) {
-            this.setState(() => ({backgroundColor: "yellow"}));
+            this.setState(() => ({backgroundColor: "#FFC041", color: "white"}));
         }
     }
     render() {
         return (
             <div>
-                <p><span className="dot" style={{backgroundColor: this.state.backgroundColor}} onClick={this.state.backgroundColor === "yellow" ? () => this.turnOff(this.props.eventId) : () => this.turnOn(this.props.eventId)}></span> Interested</p>
+                <p className="event_button_interested" style={{backgroundColor: this.state.backgroundColor, color: this.state.color}} onClick={this.state.backgroundColor === "#FFC041" ? () => this.turnOff(this.props.eventId) : () => this.turnOn(this.props.eventId)}>Interested</p>
             </div>
         )
     }
@@ -35,7 +36,7 @@ class DotOne extends React.Component {
         axios.post('/interested', data).then(function(result) {
             console.log(result);
         })
-        this.setState(() => ({backgroundColor: "yellow"}));
+        this.setState(() => ({backgroundColor: "#FFC041", color: "white"}));
     }
     turnOff(eventId) {
         let data = {
@@ -44,7 +45,7 @@ class DotOne extends React.Component {
         axios.post('/notInterested', data).then(function(result) {
             console.log(result);
         })
-        this.setState(() => ({backgroundColor: "transparent"}));
+        this.setState(() => ({backgroundColor: "transparent", color: "lightgray"}));
     }
 }
 

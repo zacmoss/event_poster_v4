@@ -4,7 +4,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-//const functions = require('./functions.js');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
@@ -12,15 +11,10 @@ var mongoose = require('mongoose');
 Promise = require('bluebird');
 mongoose.Promise = Promise;
 require('dotenv').load();
-//require('dotenv').config();
 const session = require('express-session');
 
-//console.log(require('dotenv').config());
 
 let signedIn = false;
-
-//let sessionArray =[];
-
 
 app.use(cors());
 
@@ -51,11 +45,34 @@ app.route('/test').get(function (req, res) {
 */
 
 
+const CONNECTION_STRING = process.env.DB;
+
+// Delete Old Events
+
+let today = new Date();
+
+MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+    let dbo = db.db("jive-database");
+    let collection = dbo.collection('events');
+    collection.find().toArray(function(err, result) {
+        let todayTs = today.getTime();
+        let i = 0;
+        for (i = 0; i < result.length; i++) {
+            let dateTs = (new Date(result[i].date)).getTime(); // changes date to timestamp
+            if (todayTs > dateTs) {
+                try {
+                    collection.deleteOne({_id: ObjectId(result[i]._id)});
+                    console.log('successfully deleted event: ' + result[i].title);
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+        }
+    });
+});
 
 
 // HTTP Requests
-
-const CONNECTION_STRING = process.env.DB;
 
 app.get('/getSignedInVar', (req, res) => {
     if (req.session.user) {
@@ -68,7 +85,6 @@ app.get('/getSignedInVar', (req, res) => {
 app.get('/eventFeed', (req, res) => {
 
     let loggedIn = undefined;
-    //if (req.session.user) { loggedIn = true } else { loggedIn = false }
     req.session.user ? loggedIn = true : loggedIn = false;
 
     MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
@@ -85,7 +101,7 @@ app.get('/eventFeed', (req, res) => {
                     let dbo = db.db("jive-database");
                     let collection = dbo.collection('users');
                     collection.findOne({user: req.session.user}, function(err, result) {
-                        console.log('result here');
+                        //console.log('result here');
                         
                         
                         //req.session.interested = [];
@@ -98,7 +114,7 @@ app.get('/eventFeed', (req, res) => {
                         // result.interested result.going
                         // push interested and going into req.session.interested
 
-                        console.log(req.session.interested);
+                        //console.log(req.session.interested);
 
                         res.send({
                             array: array,
@@ -117,6 +133,7 @@ app.get('/eventFeed', (req, res) => {
         })
     });
 })
+/*
 app.post('/logout', (req, res) => {
     if (signedIn) {
         signedIn = false;
@@ -127,17 +144,22 @@ app.post('/logout', (req, res) => {
         res.send({message: "User not signed in", error: 1, signedIn: false})
     }
 })
+*/
 app.post('/createEvent', (req, res) => {
     //res.set('Content-Type', 'text/json');
 
     let title = req.body.title;
     let location = req.body.location;
     let description = req.body.description;
+    let time = req.body.time;
+    let date = req.body.date;
 
     let eventObject = {
         "title": title,
         "location": location,
         "description": description,
+        "time": time,
+        "date": date,
         "interested": [],
         "going": []
     }
@@ -148,8 +170,16 @@ app.post('/createEvent', (req, res) => {
         collection.insertOne(eventObject);
     });
 
-    res.send({ title: title, location: location, description: description });
+    res.send({ title: title, location: location, description: description, time: time, date: date });
 
+})
+
+app.post('/deleteOldEvents', (req, res) => {
+    // get today's date
+    // map through database
+    // if event date is before today's delete event
+
+    res.send({message: "working"});
 })
 
 app.post('/createUser', (req, res) => {
@@ -204,7 +234,7 @@ app.post('/loginUser', (req, res) => {
         collection.findOne({user: user}, function(err, result) {
             if (result) {
                 if (result.password === password) {
-                    console.log(result);
+                    //console.log(result);
                     
                     signedIn = true;
                     req.session.userId = result._id;
@@ -232,8 +262,19 @@ app.post('/loginUser', (req, res) => {
             }
         });
     });
-    
 })
+
+app.post('/logout', (req, res) => {
+    if (signedIn) {
+        signedIn = false;
+        req.session.destroy();
+        res.send({message: "User has logged out", error: 0, signedIn: false});
+        //window.location.reload(true);
+    } else {
+        res.send({message: "User not signed in", error: 1, signedIn: false})
+    }
+})
+
 
 // interested and going post requests
 // works
