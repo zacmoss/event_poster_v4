@@ -65,7 +65,7 @@ class EventFeed extends React.Component {
                 
                 // below must have key for generated ('iterated') data which is returned
                 let eventCount = 0;
-                let totalEvents = response.data.array.length;
+                //let totalEvents = response.data.array.length;
                 let newArray = sortEvents(response.data.array);
                 let mapArray = newArray.map(function(ele) {
 
@@ -145,60 +145,61 @@ class EventFeed extends React.Component {
                 if (mapArray.length > 10) {
                     let i = 0;
                     let count = 0;
-                    //let pushArray = [];
                     for (i = 0; i <= mapArray.length - 1; i++) {
                         if (shownEvents.length > 9) {
                             if (mapArray[i] !== null) { // if event is null b/c of interested and going don't include it 
                                 storedEvents.push(mapArray[i]);
                             }
-                            /*
-                            if (count < 10) {
-                                if (mapArray[i] !== null) { // if event is null b/c of interested and going don't include it 
-                                    //pushArray.push(mapArray[i]);
-                                    //count++;
-                                }
-                            } else {
-                                //pushArray.push(mapArray[i]);
-                                //storedEvents.push(pushArray);
-                                //pushArray = [];
-                                //count = 0;
-                            }
-                            */
                         } else {
                             if (count < 10) {
                                 if (mapArray[i] !== null) { // if event is null b/c of interested and going don't include it
                                     storedEvents.push(mapArray[i]);
                                     shownEvents.push(mapArray[i]);
-                                    //pushArray.push(mapArray[i]);
                                     count++;
                                 }
                             } else {
-                                //shownEvents.push(pushArray);
-                                //pushArray = [];
-                                //pushArray.push(mapArray[i]); // pushing the first for storedArray
                                 storedEvents.push(mapArray[i]);
                                 count = 0;
                             }
                         }
                     }
-                    // this is if there is not 10 events or we're on interested
-                    // or going and there's not 10 events, then we won't get to
-                    // the push into shownEvents above
-                    /*
-                    if (shownEvents.length < 1) {
-                        shownEvents.push(pushArray);
-                    }
-                    */
-                
                 }
-                console.log(storedEvents);
-                console.log(shownEvents);
+                //console.log(storedEvents);
+                //console.log(shownEvents);
                 
-                //eventCount = shownEvents[0].length;
                 eventCount = shownEvents.length;
-                
-                self.setState(() => ({ array: shownEvents, eventCount: eventCount, totalEvents: totalEvents, storedEvents: storedEvents, pageCount: 1 }));
-        
+                if (shownEvents.length < 10) {
+                    self.setState(() => ({
+                        array: shownEvents,
+                        eventCount: eventCount,
+                        totalEvents: storedEvents.length,
+                        storedEvents: storedEvents,
+                        pageCount: 1,
+                        nextButton: false,
+                        previousButton: false
+                    }));
+                } else {
+                    if (storedEvents.length > 10) {
+                        self.setState(() => ({
+                            array: shownEvents,
+                            eventCount: eventCount,
+                            totalEvents: storedEvents.length,
+                            storedEvents: storedEvents,
+                            pageCount: 1,
+                            nextButton: true,
+                            previousButton: false
+                        }));
+                    } else {
+                        self.setState(() => ({
+                            array: shownEvents,
+                            eventCount: eventCount,
+                            totalEvents: storedEvents.length,
+                            storedEvents: storedEvents,
+                            pageCount: 1,
+                            previousButton: false
+                        }));
+                    }
+                }
             }); // for request 'eventFeed'
         }).catch(function(err) { // for request 'getSignedInVar'
             console.log("error: " + err);
@@ -248,14 +249,10 @@ class EventFeed extends React.Component {
         // we can show correct events
 
         // firstTen would be pageCount 1
-        // then on pageCount 2 we show storedEvents[0]
-        // on pageCount 3 we show storedEvents[1]
+        // then on pageCount 2 we show storedEvents[10 - 19]
+        // on pageCount 3 we show storedEvents[20 - 29]
         // and so on
-
-        // grab storedEvents
-        // grab firstTen
-        // set state array to nextTen
-
+    
         let removeBefore = this.state.pageCount * 10;
         let array = this.state.storedEvents.slice();
         array.splice(0, removeBefore);
@@ -268,25 +265,23 @@ class EventFeed extends React.Component {
         // if pressing next again would lead to 0 events, change nextButton to false
         // array is what is left over after the splicing, so if nothing left, then nothing to show
         if (array.length < 1) {
-            this.setState(() => ({array: shownArray, eventCount: eventCount, pageCount: nextPage, nextButton: false}))
+            this.setState(() => ({array: shownArray, eventCount: eventCount, pageCount: nextPage, nextButton: false, previousButton: true}))
         } else {
             this.setState(() => ({array: shownArray, eventCount: eventCount, pageCount: nextPage, previousButton: true}));
         }
     }
     previousHandler() {
-        //////// Doesn't work for interested....why /////////////////
-        let array = this.state.storedEvents.slice();
-        let backEnd = (this.state.pageCount * 10) - 10;
-        let frontEnd = backEnd - 9;
+        let array = this.state.storedEvents.slice(); // clones storedEvents array
+        let backEnd = (this.state.pageCount * 10) - 10; // (19) (e[10] - e[19]) - page 2
+        let frontEnd = (backEnd - 9);
         let shownArray = array.splice(frontEnd, backEnd);
-        let eventCount = this.state.storedEvents.length; // fix this //////////////////
+        let eventCount = (shownArray.length + frontEnd) - 1; //this.state.storedEvents.length; // fix this //////////////////
         let previousPage = this.state.pageCount - 1;
         if (backEnd === 10) {
-            this.setState(() => ({array: shownArray, eventCount: eventCount, pageCount: previousPage, previousButton: false}));
+            this.setState(() => ({array: shownArray, eventCount: eventCount, pageCount: previousPage, nextButton: true, previousButton: false}));
         } else {
             this.setState(() => ({array: shownArray, eventCount: eventCount, pageCount: previousPage, nextButton: true}));
         }
-
     }
 }
 
