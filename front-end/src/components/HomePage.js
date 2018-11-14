@@ -28,7 +28,6 @@ class HomePage extends React.Component {
             <div>
                 <Header />
                 <div className="home_page_container">
-                    
                     <EventFeed />
                     <CreateEventComponent />
                 </div>

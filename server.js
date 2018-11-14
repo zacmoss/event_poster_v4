@@ -49,6 +49,36 @@ const CONNECTION_STRING = process.env.DB;
 
 // Delete Old Events
 
+// used to create test batch of events
+/*
+i = 1;
+for (i = 1; i < 26; i++) {
+    let testEvent = {
+        "title": "",
+        "description": "",
+        "location": "",
+        "time": "7:00pm",
+        "date": "2018-12-14",
+        "interested": [],
+        "going": []
+    }
+    testEvent.title = "Test Event " + i;
+    testEvent.description = "Test description for " + testEvent.title;
+    testEvent.location = "Test Location";
+    if (i < 10) {
+        testEvent.date = "2018-12-" + i;
+    } else {
+        testEvent.date = "2018-12-" + i;
+    }
+
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("jive-database");
+        let collection = dbo.collection('events');
+        collection.insertOne(testEvent);
+    });
+}
+*/
+
 let today = new Date();
 
 MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
@@ -156,8 +186,8 @@ app.post('/createEvent', (req, res) => {
 
     let eventObject = {
         "title": title,
-        "location": location,
         "description": description,
+        "location": location,
         "time": time,
         "date": date,
         "interested": [],

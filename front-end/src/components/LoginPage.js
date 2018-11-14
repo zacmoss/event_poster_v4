@@ -48,10 +48,10 @@ class LoginPage extends React.Component {
                         <form className="form" onSubmit={this.onSubmit}>
                             <div className="form_inputs_container">
                                 <div>
-                                    <input name="user" placeholder="name" autocomplete="off"></input>
+                                    <input name="user" placeholder="name" autoComplete="off"></input>
                                 </div>
                                 <div>
-                                    <input name="password" placeholder="password" autocomplete="off"></input>
+                                    <input name="password" placeholder="password" autoComplete="off"></input>
                                 </div>
                                 <div className="form_button_container">
                                     <button>Login</button>

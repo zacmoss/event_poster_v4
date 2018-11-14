@@ -45,15 +45,15 @@ class CreateEventPage extends React.Component {
                             <div className="form_inputs_container">
                                 <div>
                                     <div><label>Title</label></div>
-                                    <input name="title" placeholder="Enter a title" autocomplete="off"></input>
+                                    <input name="title" placeholder="Enter a title" autoComplete="off"></input>
                                 </div>
                                 <div>
                                     <div><label>Location</label></div>
-                                    <input name="location" placeholder="Enter a location" autocomplete="off"></input>
+                                    <input name="location" placeholder="Enter a location" autoComplete="off"></input>
                                 </div>
                                 <div>
                                     <div><label>Description</label></div>
-                                    <textarea name="description" placeholder="Description" autocomplete="off"></textarea>
+                                    <textarea name="description" placeholder="Description" autoComplete="off"></textarea>
                                 </div>
                                 <div className="form_button_container">
                                     <button>Submit</button>

@@ -113,18 +113,24 @@ class EventFeed extends React.Component {
                         eventCount += 1;
                         return (
                             <div className="event_container" key={ele._id}>
-                            <div className="row">
-                                <div className="event_top_left_space">
-                                <p className="event_title">{ele.title}</p>
+                                <div className="row">
+                                    <div className="event_top_left_space">
+                                    <p className="event_title">{ele.title}</p>
+                                    </div>
+                                    <div className="event_top_right_space">
+                                        {response.data.loggedIn && <DotOne onOff={dotOne.onOff} eventId={ele._id} />}
+                                        {response.data.loggedIn && <DotTwo onOff={dotTwo.onOff} eventId={ele._id} />}
+                                    </div>
                                 </div>
-                                <div className="event_top_right_space">
-                                    {response.data.loggedIn && <DotOne onOff={dotOne.onOff} eventId={ele._id} />}
-                                    {response.data.loggedIn && <DotTwo onOff={dotTwo.onOff} eventId={ele._id} />}
+                                
+                                <p>{ele.description}</p>
+                                <div className="event_bottom_line">
+                                    <span className="event_bottom_item">{ele.location}</span>
+                                    <span className="event_dash">|</span>
+                                    <span className="event_bottom_item">{ele.time}</span>
+                                    <span className="event_dash">|</span>
+                                    <span className="event_bottom_item">{ele.date}</span>
                                 </div>
-                            </div>
-                            
-                            <p>{ele.description}</p>
-                            <p>{ele.location}<span>|</span>{ele.time}<span>|</span>{ele.date}</p>
                             </div>
                         );
                     } else {
@@ -138,7 +144,6 @@ class EventFeed extends React.Component {
                 // make a new array and when setting state, make the first 10 the state array
                 // then when they click next 10, have a handler function which saves next 10 in state
                 // and displays that 10
-                
                 
                 let shownEvents = [];
                 let storedEvents = [];
@@ -163,6 +168,9 @@ class EventFeed extends React.Component {
                             }
                         }
                     }
+                } else {
+                    shownEvents = mapArray;
+                    storedEvents = mapArray;
                 }
                 //console.log(storedEvents);
                 //console.log(shownEvents);
@@ -222,8 +230,8 @@ class EventFeed extends React.Component {
                 <div className="events_array"><div>{this.state.array}</div></div>
                 <div className="message_bottom">
                     <p>Showing {this.state.eventCount} events out of {this.state.totalEvents} total events. 
-                    {this.state.previousButton ? <span className="next_button" onClick={this.previousHandler}>Previous 10</span> : null}
-                        {this.state.nextButton ? <span className="next_button" onClick={this.nextHandler}>Next 10</span> : null}
+                    {this.state.previousButton ? <span className="next_button" onClick={this.previousHandler}>&#x3c; Previous</span> : null}
+                        {this.state.nextButton ? <span className="next_button" onClick={this.nextHandler}>Next &#x3e;</span> : null}
                     </p>
                 </div>
                 
@@ -273,9 +281,9 @@ class EventFeed extends React.Component {
     previousHandler() {
         let array = this.state.storedEvents.slice(); // clones storedEvents array
         let backEnd = (this.state.pageCount * 10) - 10; // (19) (e[10] - e[19]) - page 2
-        let frontEnd = (backEnd - 9);
-        let shownArray = array.splice(frontEnd, backEnd);
-        let eventCount = (shownArray.length + frontEnd) - 1; //this.state.storedEvents.length; // fix this //////////////////
+        let frontEnd = (backEnd - 10);
+        let shownArray = array.splice(frontEnd, 10);
+        let eventCount = (shownArray.length + frontEnd); //this.state.storedEvents.length; // fix this //////////////////
         let previousPage = this.state.pageCount - 1;
         if (backEnd === 10) {
             this.setState(() => ({array: shownArray, eventCount: eventCount, pageCount: previousPage, nextButton: true, previousButton: false}));
