@@ -47,6 +47,24 @@ html, body {
     /*color: #8B008B;*/
     color: #9932CC;
 }
+@media (max-width: 550px) {
+    .header_container {
+        line-height: 20px;
+        padding: 1rem;
+    }
+    .header_container h1 {
+        padding: 0;
+        margin: 0;
+        font-size: 20px;
+    }
+    .nav_container {
+        padding: 0;
+        margin: 0;
+    }
+    .link_signUp {
+        display: none;
+    }
+}
 
 
 
@@ -88,11 +106,23 @@ html, body {
 @media (max-width: 1000px) {
     .mid_section {
         width: 70%;
+        padding: 0 1rem;
     }
 }
 @media (max-width: 740px) {
     .mid_section {
         width: 90%;
+    }
+}
+@media (max-width: 525px) {
+    .mid_section h2 {
+        text-align: center;
+    }
+    .event_button_going {
+        display: none;
+    }
+    .event_button_interested {
+        margin-left: 2rem;
     }
 }
 
@@ -329,11 +359,9 @@ html, body {
 
 .form_page_container {
     padding-top: 4rem;
-    /*padding-bottom: 4rem;*/
     padding-bottom: 10rem;
     display: flex;
     justify-content: center;
-    /*height: 500px;*/
     background-color: #F2F2F2;
     box-shadow: inset 0 7px 9px -7px rgba(0,0,0,0.4);
 }
@@ -357,12 +385,10 @@ html, body {
     font-weight: 400;
 }
 .form {
-    /*border: 1px black solid;*/
     display: flex;
     justify-content: center;
 }
 .form_inputs_container {
-    /*border: 1px black solid;*/
     margin-top: 1rem;
 }
 
@@ -377,7 +403,6 @@ html, body {
     width: 300px;
     font-size: 16px;
     font-weight: 200;
-    /*border-radius: 5px;*/
 }
 .form_button_container {
     display: flex;
@@ -404,4 +429,18 @@ html, body {
     font-size: 12px;
     text-align: center;
 }
-
+@media (max-width: 600px) {
+    .form_container {
+        width: 75%;
+        padding: 0;
+    }
+    .form_inputs_container input, textarea {
+        width: 95%;
+    }
+}
+@media (max-width: 400px) {
+    .form_inputs_container input, textarea {
+        width: 90%;
+        border: 1px lightgray solid;
+    }
+}

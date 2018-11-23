@@ -6,6 +6,61 @@ import axios from 'axios';
 
 class CreateEventComponent extends React.Component {
 
+    state = {
+        dateString: undefined
+    }
+    
+    componentWillMount() {
+        let today = new Date();
+        let x = today.toString();
+        let array = x.split(" ");
+        let month = array[1];
+        let day = array[2];
+        let year = array[3];
+        switch (month) {
+            case "Jan":
+                month = "01";
+                break;
+            case "Feb":
+                month = "02";
+                break;
+            case "Mar":
+                month = "03";
+                break;
+            case "Apr":
+                month = "04";
+                break;
+            case "May":
+                month = "05";
+                break;
+            case "Jun":
+                month = "06";
+                break;
+            case "Jul":
+                month = "07";
+                break;
+            case "Aug":
+                month = "08";
+                break;
+            case "Sep":
+                month = "09";
+                break;
+            case "Oct":
+                month = "10";
+                break;
+            case "Nov":
+                month = "11";
+                break;
+            case "Dec":
+                month = "12";
+                break;
+            default:
+                break;
+        }
+        let dateString = year + "-" + month + "-" + day;
+        this.setState(() => ({ dateString: dateString }));
+    }
+
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -84,7 +139,7 @@ class CreateEventComponent extends React.Component {
                                     </div>
                                     <div>
                                     <div><label>Date</label></div>
-                                    <input className="dateInput" type="date" name="date" autoComplete="off" required></input>
+                                    <input className="dateInput" type="date" name="date" min={this.state.dateString} autoComplete="off" required></input>
                                     </div>
                                 </div>
                                 <div>

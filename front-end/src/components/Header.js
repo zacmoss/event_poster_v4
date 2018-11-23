@@ -42,8 +42,8 @@ class Header extends React.Component {
             <div className="header_container">
                 <div><h1><Link className="logo" to="/">Event Poster</Link></h1></div>
                 <p className="nav_container">
-                    {this.state.signedIn === false && <Link className="link" to="/login">Login</Link>}
-                    {this.state.signedIn === false && <Link className="link" to="/signUp">Sign Up</Link>}
+                    {this.state.signedIn === false && <Link className="link link_login" to="/login">Login</Link>}
+                    {this.state.signedIn === false && <Link className="link link_signUp" to="/signUp">Sign Up</Link>}
                     {this.state.signedIn && <span className="link" onClick={this.logout}>Logout</span>}
                 </p>
             </div>

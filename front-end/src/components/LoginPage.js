@@ -47,7 +47,7 @@ class LoginPage extends React.Component {
                         <h2>Login Here</h2>
                         <form className="form" onSubmit={this.onSubmit}>
                             <div className="form_inputs_container">
-                                <div>
+                                <div className="row center">
                                     <input name="user" placeholder="name" autoComplete="off"></input>
                                 </div>
                                 <div>
