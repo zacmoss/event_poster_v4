@@ -60,6 +60,20 @@ class Header extends React.Component {
             console.log("catch error: " + err);
         })
     }
+
+    /*
+    searchEvents(e) {
+        e.preventDefault();
+        let searchString = e.target.elements.searchBar.value;
+        let data = { "searchString": searchString };
+        axios.post('/searchEvents', data).then(function(response) {
+            console.log('test');
+            console.log(response);
+        }).catch(function(err) {
+            console.log("catch error: " + err);
+        })
+    }
+    */
 }
 
 export default Header;

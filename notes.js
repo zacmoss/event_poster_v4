@@ -67,6 +67,18 @@
     to pageCount state. For previous, we do the same, but backwards and subtract 1 from 
     pageCount state.
 
+    So, there is an issue with displaying the event dates from user created events. Basically,
+    the issue happens in the sortEvents function. For some reason, the date we pass in is
+    treated as if it is GMT time I believe...then it's converted to a timestamp which is in
+    CST my local timezone, which is 6 hours less than the original date intended, which due
+    to the date being created at 00:00 time this pushes the day back by 1. So, the day
+    displayed for a user created event was off by 1. My short term fix for this is just
+    to add 6 hours to the timestamp which returns it to the correct day for now. This would
+    need to be changed  in the future b/c it will not work for users in other timezones,
+    particularly users west of me...We may need to eventually find a way to create a 
+    custom date object at event creation which is sorted that way...Or we can consider
+    sorting event dates by year, then month, then day and never convert to timestamp...
+
 
 
 
@@ -74,14 +86,8 @@
 
     First Final
 
-    Do a next / last / first links for event feed and (1, 2, 3)
 
     Make errors show on form rather than alert when logging in, sign up, or create event
-
-    Consider intersted and going style where words are at top either highlighted
-    or not, no colors involved. And before either is picked, the style would be
-    to highlight them on hover and stay highlighted if clicked. Maybe have yellow
-    and green colors...
 
     For filter, could add a tags array to each eventObject, and add all strings
     in title, description, location...that way we can just search each tags array
@@ -96,10 +102,6 @@
     Clear server.js clutter
 
     Clear un-needed files
-
-    Add to portfolio
-
-    Finish Style 1
 
     Finish Style 2 - decided final Style 2
 

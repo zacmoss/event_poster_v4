@@ -47,8 +47,6 @@ app.route('/test').get(function (req, res) {
 
 const CONNECTION_STRING = process.env.DB;
 
-// Delete Old Events
-
 // used to create test batch of events
 /*
 i = 1;
@@ -78,6 +76,31 @@ for (i = 1; i < 26; i++) {
     });
 }
 */
+
+
+// Testing Search Events Feature
+// works
+/*
+MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+    let dbo = db.db("jive-database");
+    let collection = dbo.collection('events');
+
+    // sets fields in the db to make searchable by text
+    // only need to do once???
+    //collection.createIndex( { title: "text", description: "text", location: "text" } );
+
+    collection.find({ $text: { $search: "central park" } }).toArray(function(err, result) {
+    //collection.find({title: "Test Event 5"}, function(err, result) {
+
+        console.log(result);
+
+    });
+});
+*/
+
+
+
+// Delete Old Events Feature
 
 let today = new Date();
 
@@ -412,6 +435,20 @@ app.post('/notGoing', (req, res) => {
         })
         
     })
+})
+
+app.post('/searchEvents', (req, res) => {
+    console.log('Search String:');
+    console.log(req.body.searchString);
+    let searchString = req.body.searchString;
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("jive-database");
+        let collection = dbo.collection('events');
+        collection.find({ $text: { $search: searchString } }).toArray(function(err, result) {
+            console.log(result);
+            res.send(result);
+        });
+    });
 })
 
 

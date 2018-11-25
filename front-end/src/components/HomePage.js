@@ -4,6 +4,7 @@ import EventFeed from './EventFeed';
 //import axios from 'axios';
 import Header from './Header';
 import CreateEventComponent from './CreateEventComponent';
+import SearchEventsComponent from './SearchEventsComponent';
 //import { Link } from 'react-router-dom';
 
 
