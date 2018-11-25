@@ -118,12 +118,6 @@ html, body {
     .mid_section h2 {
         text-align: center;
     }
-    .event_button_going {
-        display: none;
-    }
-    .event_button_interested {
-        margin-left: 2rem;
-    }
 }
 
 
@@ -157,6 +151,11 @@ html, body {
 .next_button:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+@media (max-width: 525px) {
+    .message {
+        text-align: center;
+    }
 }
 
 
@@ -201,13 +200,17 @@ html, body {
 /* ---- Event Array ---- */
 .event_container {
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 1rem 1rem 2rem 1rem;
     background-color: white;
     color: black;
     box-shadow: 0 0 3px gray;
 }
 .event_dash {
     padding: 0 1rem;
+}
+.event_top {
+    display: flex;
+    justify-content: space-between;
 }
 .event_top_left_space {
     width: 50%;
@@ -234,13 +237,34 @@ html, body {
     cursor: pointer;
     color: black !important;
 }
+.event_button_interested_mobile {
+    display: none;
+    margin-top: 0;
+    margin-left: 2rem;
+    padding: .5rem 1rem;
+    border-radius: 5px;
+}
+.event_button_interested_mobile:hover {
+    cursor: pointer;
+    color: black !important;
+}
 .event_button_going {
     margin-top: 0;
     padding: .5rem;
     border-radius: 5px;
-    /*border: 1px black solid;*/
 }
 .event_button_going:hover {
+    cursor: pointer;
+    color: black !important;
+}
+.event_button_going_mobile {
+    display: none;
+    margin-top: 0;
+    /*margin-left: -1rem;*/
+    padding: .5rem 1rem;
+    border-radius: 5px;
+}
+.event_button_going_mobile:hover {
     cursor: pointer;
     color: black !important;
 }
@@ -254,6 +278,35 @@ html, body {
     }
     .message_bottom {
         font-size: 12px;
+    }
+}
+@media (max-width: 525px) {
+    /*
+    .event_top {
+        display: block;
+    }
+    .event_top_left_space {
+        width: 100%;
+    }
+    .event_top_right_space {
+        width: 100%;
+        justify-content: left;
+        margin-top: 1rem;
+    }
+    */
+    
+    .event_button_going {
+        display: none;
+    }
+    
+    .event_button_interested {
+        display: none;
+        /*margin-left: 2rem;*/
+        /*margin-right: 1rem;*/
+    }
+    
+    .event_button_interested_mobile, .event_button_going_mobile {
+        display: block;
     }
 }
 

@@ -19,9 +19,15 @@ class DotTwo extends React.Component {
         return (
             <div>
                 <p className="event_button_going"
+                title="Plan to go"
                 style={{backgroundColor: this.state.backgroundColor, color: this.state.color}}
                 onClick={this.state.backgroundColor === "#2BA745" ? () => this.turnOff(this.props.eventId) : () => this.turnOn(this.props.eventId)}>
                 Going</p>
+                <p className="event_button_going_mobile"
+                title="Plan to go"
+                style={{backgroundColor: this.state.backgroundColor, color: this.state.color}}
+                onClick={this.state.backgroundColor === "#2BA745" ? () => this.turnOff(this.props.eventId) : () => this.turnOn(this.props.eventId)}>
+                G</p>
             </div>
         )
     }

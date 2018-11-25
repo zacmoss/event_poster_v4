@@ -24,7 +24,19 @@ class DotOne extends React.Component {
     render() {
         return (
             <div>
-                <p className="event_button_interested" style={{backgroundColor: this.state.backgroundColor, color: this.state.color}} onClick={this.state.backgroundColor === "#FFC041" ? () => this.turnOff(this.props.eventId) : () => this.turnOn(this.props.eventId)}>Interested</p>
+                <p
+                className="event_button_interested"
+                title="Let them know you're interested"
+                style={{backgroundColor: this.state.backgroundColor, color: this.state.color}}
+                onClick={this.state.backgroundColor === "#FFC041" ? () => this.turnOff(this.props.eventId) : () => this.turnOn(this.props.eventId)}>
+                Interested
+                </p>
+                <p
+                className="event_button_interested_mobile"
+                title="Let them know you're interested"
+                style={{backgroundColor: this.state.backgroundColor, color: this.state.color}}
+                onClick={this.state.backgroundColor === "#FFC041" ? () => this.turnOff(this.props.eventId) : () => this.turnOn(this.props.eventId)}>
+                I</p>
             </div>
         )
     }

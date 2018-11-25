@@ -70,6 +70,11 @@ class CreateEventComponent extends React.Component {
         let date = e.target.elements.date.value;
         let description = e.target.elements.description.value;
 
+        // input sanitization
+
+        // just display title with ... if beyond a certain length
+        //date = date.toString();
+        //alert(date);
         let data = {
             "title": title,
             "location": location,

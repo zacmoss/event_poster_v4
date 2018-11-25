@@ -110,12 +110,47 @@ class EventFeed extends React.Component {
                     }
                     
                     if (displayEvent === true) {
+
                         eventCount += 1;
+                        let titleDisplay;
+                        let descriptionDisplay;
+                        let locationDisplay;
+
+                        if (ele.title.length > 23) {
+                            if (ele.title[22] === " ") {
+                                titleDisplay = ele.title.slice(0, 22) + "...";
+                            } else {
+                                titleDisplay = ele.title.slice(0, 23) + "...";
+                            }
+                        } else {
+                            titleDisplay = ele.title;
+                        }
+
+                        if (ele.description.length > 100) {
+                            if (ele.description[99] === " ") {
+                                descriptionDisplay = ele.description.slice(0, 99) + "...";
+                            } else {
+                                descriptionDisplay = ele.description.slice(0, 100) + "...";
+                            }
+                        } else {
+                            descriptionDisplay = ele.description;
+                        }
+
+                        if (ele.location.length > 23) {
+                            if (ele.location[22] === " ") {
+                                locationDisplay = ele.location.slice(0, 22) + "...";
+                            } else {
+                                locationDisplay = ele.location.slice(0, 23) + "...";
+                            }
+                        } else {
+                            locationDisplay = ele.location;
+                        }
+                        
                         return (
                             <div className="event_container" key={ele._id}>
-                                <div className="row">
+                                <div className="event_top">
                                     <div className="event_top_left_space">
-                                    <p className="event_title">{ele.title}</p>
+                                    <p className="event_title">{titleDisplay}</p>
                                     </div>
                                     <div className="event_top_right_space">
                                         {response.data.loggedIn && <DotOne onOff={dotOne.onOff} eventId={ele._id} />}
@@ -123,9 +158,9 @@ class EventFeed extends React.Component {
                                     </div>
                                 </div>
                                 
-                                <p>{ele.description}</p>
+                                <p>{descriptionDisplay}</p>
                                 <div className="event_bottom_line">
-                                    <span className="event_bottom_item">{ele.location}</span>
+                                    <span className="event_bottom_item">{locationDisplay}</span>
                                     <span className="event_dash">|</span>
                                     <span className="event_bottom_item">{ele.time}</span>
                                     <span className="event_dash">|</span>
